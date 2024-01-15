@@ -1,7 +1,9 @@
-// src/components/SignUp.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -18,7 +20,10 @@ const SignUp = () => {
       });
 
       if (response.ok) {
-        alert("회원가입 완료")
+        alert("회원가입 완료");
+
+        // Use navigate function to navigate to the '/signin' route
+        navigate("/signin");
       } else {
         // 회원가입 실패 로직을 여기에 추가
         console.error('Sign up failed');
@@ -43,7 +48,7 @@ const SignUp = () => {
         </label>
         <br />
         <label>
-            ConfirmPassword:
+          ConfirmPassword:
           <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
         </label>
         <br/>

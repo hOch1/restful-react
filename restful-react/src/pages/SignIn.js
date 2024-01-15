@@ -1,7 +1,10 @@
 // src/components/Login.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -11,13 +14,18 @@ const Login = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: localStorage.getItem("accessToken"),
         },
         body: JSON.stringify({ email, password }),
       });
 
       if (response.ok) {
-        // 로그인 성공 로직을 여기에 추가
-        console.log('Login successful');
+        const responseData = await response.json();
+
+        localStorage.setItem('accessToken', responseData.data.accessToken);
+
+        alert("로그인 완료");
+        navigate("/");
       } else {
         // 로그인 실패 로직을 여기에 추가
         console.error('Login failed');
